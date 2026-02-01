@@ -98,6 +98,12 @@ vim.g.have_nerd_font = true
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+-- Set tab size to 2 spaces
+vim.o.tabstop = 2 -- Number of spaces a tab character represents
+vim.o.shiftwidth = 2 -- Number of spaces for auto-indent
+vim.o.softtabstop = 2 -- Number of spaces when pressing Tab
+vim.o.expandtab = true -- Use spaces instead of tabs
+
 -- Make line numbers default
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -247,7 +253,20 @@ rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+  { -- Detect tabstop and shiftwidth automatically
+    'NMAC427/guess-indent.nvim',
+    opts = {
+      auto_cmd = true, -- Enable automatic indent detection
+      override_editorconfig = false, -- Respect .editorconfig files
+      filetype_exclude = {}, -- No filetypes excluded
+      buftype_exclude = { -- Exclude these buffer types
+        'help',
+        'nofile',
+        'terminal',
+        'prompt',
+      },
+    },
+  },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
